@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
   const products= [
     {
       id:1, name:'Shirt',price:2199,
@@ -26,7 +26,11 @@ import React from 'react';
     },
   ]
 const App = () => {
-
+const [cart, setCart] = useState([]);
+  const addToCart =(product) => {
+    console.log(product)
+    setCart((prevcart)=> [...prevcart,product])
+  }
   return (
     <div>
       <div className='px-4 py-20 max-w-screen-lg mx-auto'>
@@ -36,11 +40,25 @@ const App = () => {
         products.map(product=>(
           <div className='border shadow-2xl  px-5 py-5 rounded-xl bg-indigo-300' key={product.id}>
             <h2 className='text-center text-2xl font-bold'>{product.name}</h2>
-            <h2 className='text-center'>price: {product.price}</h2>
-            <button className='bg-green-400 hover:bg-green-600 mt-4 flex mx-auto px-3 py-2 rounded-xl text-white font-bold '>Add to Cart</button>
+            <h2 className='text-center'>price:$ {product.price}</h2>
+            <button onClick={() => addToCart(product)} className='bg-green-400 hover:bg-green-600 mt-4 flex mx-auto px-3 py-2 rounded-xl text-white font-bold '>Add to Cart</button>
           </div>
         ))
       }
+    </div>
+    <div className='mt-5 text-center'>
+      <h2 className='text-2xl font-bold'>Cart:</h2>
+      {
+        cart.length === 0?(<p className='text-2xl font-bold'>Your Cart is empty</p>) : <ol>
+          <li>{
+            cart.map((item, index)=> (
+              <li key={index} className='text-gray-600'>{item.name}-${item.price}</li>
+            ))
+            
+            }</li>
+        </ol>
+      }
+      
     </div>
       </div>
     </div>
